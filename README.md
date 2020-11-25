@@ -42,6 +42,15 @@ end )
 #### result
 ![graphical1](https://media.discordapp.net/attachments/608325399687987240/781112632379441182/unknown.png)
 
+## enums
+### draw methods
++ `GRAFY_DOT = 0`: draw dot
++ `GRAFY_LINE = 1`: draw line
+
+### parse methods
++ `GRAFY_XY = 0`: parser will look for pairs of values forming X:Y coordinates
++ `GRAFY_Y = 1`: parser will consider all values as Y coordinates and will attribute an incrementing X value starting from 1
+
 ## objects
 + `grafy.protoz.canvas`: drawable graphic, renders others objects
     + `grafy.protoz.canvas` `grafy.canvas( number x, number y, number w, number h, number scale default 1, nullable string title )`: constructor
@@ -54,7 +63,7 @@ end )
     + void `canvas:add_render_object( grafy.protoz.* object )`: add object to renderer, object will be drawn after canvas is drawn
 
 + `grafy.protoz.table`: drawable table of X:Y values
-    + `grafy.protoz.table` `grafy.table( table values, nullable number parse_method default GRAFY_XY, nullable string label )`: constructor
+    + `grafy.protoz.table` `grafy.table( table values, nullable number parse_method => [GRAFY_XY, GRAFY_Y] default GRAFY_XY, nullable string label )`: constructor
     + `{ number x = ?, number y = ? }, ^` `table:calculate_average_dots()`: calculate and return positions of two average dots
     + `grafy.protoz.line` `table:calculate_average_line()`: calculate and return average line using average dots
     + void **internal** `table:draw( canvas )`: draw on canvas
