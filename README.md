@@ -74,3 +74,20 @@ end )
 
 ## functions
 + void **internal** `grafy.init()`: init a grafy's folder
+
+## file structure
+### schema
+```lua
+grafy/
+└── lua/
+|    └── autorun/
+|         └── grafy.lua  --  init keters and modules
+|    └── grafy/
+|         └── keter/
+|              └── *.lua  --  all important files
+|         └── *.lua  --  all modules files
+```
+
+### notes
++ keters are loaded before modules
++ returning value in a module script will add it in the protoz and will create a global constructor (considered as an object)
