@@ -1,7 +1,7 @@
 --  grafy
 grafy = {}
 grafy._path = "grafy"
-grafy._prototypes = {}
+grafy.protoz = {}
 grafy._show_example = true
 grafy._fonts = {
     normal = "DermaDefault",
@@ -37,7 +37,7 @@ grafy.init( nil, function( file, meta )
     end
 
     --  save prototype
-    grafy._prototypes[key] = meta
+    grafy.protoz[key] = meta
 end ) --  modules files
 
 --  example
