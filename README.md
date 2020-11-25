@@ -86,6 +86,7 @@ grafy/
 |         └── keter/
 |              └── *.lua  --  all important files
 |         └── *.lua  --  all modules files
+└── README.md. --  hey, it's me!
 ```
 
 ### notes
