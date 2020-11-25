@@ -42,7 +42,14 @@ end ) --  modules files
 
 --  example
 if not grafy._show_example or SERVER then hook.Remove( "HUDPaint", "grafy" ) return end
-local tbl = grafy.table( { --  cc le dm d'enseignement scientifique
+
+local w, h, scale = ScrW() / 4, ScrH() / 2, .85
+local x, y = ScrW() / 2 - w / 2, ScrH() / 2 - h / 2
+--[[ local canvas = grafy.canvas( x, y, w, h, scale, "Évolution annuel d'immatriculations de voitures neuves (diesel)" )
+canvas:set_axes_titles( "an (x)", "milliers (y)" )
+canvas:set_steps( 1, 10 ) ]]
+
+--[[ local tbl = grafy.table( { --  cc le dm d'enseignement scientifique
     100,
     106.8,
     106.8,
@@ -53,13 +60,22 @@ local tbl = grafy.table( { --  cc le dm d'enseignement scientifique
     124.9,
     126,
     122.7,
-}, GRAFY_Y, "série" )
+}, GRAFY_Y, "série" ) ]]
+--[[ local canvas = grafy.canvas( x, y, w, h, scale, "sample text" )
+canvas:set_steps( 1, 3 )
 
-local w, h, scale = ScrW() / 4, ScrH() / 2, 1
-local canvas = grafy.canvas( ScrW() / 2 - w / 2, ScrH() / 2 - h / 2, w, h, scale, "Évolution annuel d'immatriculations de voitures neuves (diesel)" )
-canvas:set_axes_titles( "an (x)", "milliers (y)" )
-canvas:set_steps( 1, 10 )
+local tbl = grafy.table( {
+    1, 2,
+    2, 6,
+    4, 8,
+    8, 12,
+    10, 15,
+}, GRAFY_XY, "example table" )
 canvas:add_render_object( tbl )
+
+local line = tbl:calculate_average_line()
+line.label = "eq: " .. line:str_formula()
+canvas:add_render_object( line ) ]]
 
 --[[ local line = grafy.line( 2.85, 101.54, "droite d'ajustement" )
 line.color = tbl.color
@@ -69,16 +85,32 @@ canvas:add_render_object( line ) ]]
 --[[ local curb = grafy.curb( function( x ) return math.exp( x ) end, "exp x" )
 canvas:add_render_object( curb ) ]]
 
-local line = grafy.line( 2.5, 102.6, "droite d'ajustement" )
+--[[ local line = grafy.line( 2.5, 102.6, "droite d'ajustement" )
 line.color = tbl.color
 line:highlight( 14 )
 print( 10, line:formula( 10 ), 11, line:formula( 11 ), 14, line:formula( 14 ) )
-canvas:add_render_object( line )
-
---[[ local line = tbl:calculate_average_line()
-print( line:str_formula() )
-print( line:formula( 10 ), line:formula( 11 ), line:formula( 14 ) )
 canvas:add_render_object( line ) ]]
+
+--  very basic canvas
+local canvas = grafy.canvas( x, y, w, h, scale, "curb your maths" )
+
+--  exponential curve
+local curb = grafy.curb( function( x )
+    return math.exp( x - 10 ) --  -10 cuz too close from origin else
+end, "exp x" )
+canvas:add_render_object( curb )
+
+--  sine curve
+local curb = grafy.curb( function( x )
+    return math.sin( x ) * 2.5 + 10
+end, "sine curve" )
+canvas:add_render_object( curb )
+
+--  cosine curve
+local curb = grafy.curb( function( x )
+    return math.cos( x ) + 5
+end )
+canvas:add_render_object( curb )
 
 hook.Add( "HUDPaint", "grafy", function()
     canvas:draw()
