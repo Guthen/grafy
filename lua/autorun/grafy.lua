@@ -45,11 +45,11 @@ if not grafy._show_example or SERVER then hook.Remove( "HUDPaint", "grafy" ) ret
 
 local w, h, scale = ScrW() / 4, ScrH() / 2, .85
 local x, y = ScrW() / 2 - w / 2, ScrH() / 2 - h / 2
---[[ local canvas = grafy.canvas( x, y, w, h, scale, "Évolution annuel d'immatriculations de voitures neuves (diesel)" )
+local canvas = grafy.canvas( x, y, w, h, scale, "Évolution annuel d'immatriculations de voitures neuves (diesel)" )
 canvas:set_axes_titles( "an (x)", "milliers (y)" )
-canvas:set_steps( 1, 10 ) ]]
+canvas:set_steps( 1, 10 )
 
---[[ local tbl = grafy.table( { --  cc le dm d'enseignement scientifique
+local tbl = grafy.table( { --  cc le dm d'enseignement scientifique
     100,
     106.8,
     106.8,
@@ -60,7 +60,7 @@ canvas:set_steps( 1, 10 ) ]]
     124.9,
     126,
     122.7,
-}, GRAFY_Y, "série" ) ]]
+}, GRAFY_Y, "série" )
 --[[ local canvas = grafy.canvas( x, y, w, h, scale, "sample text" )
 canvas:set_steps( 1, 3 )
 
@@ -85,13 +85,13 @@ canvas:add_render_object( line ) ]]
 --[[ local curb = grafy.curb( function( x ) return math.exp( x ) end, "exp x" )
 canvas:add_render_object( curb ) ]]
 
---[[ local line = grafy.line( 2.5, 102.6, "droite d'ajustement" )
+local line = grafy.line( 2.5, 102.6, "droite d'ajustement" )
 line.color = tbl.color
 line:highlight( 14 )
 print( 10, line:formula( 10 ), 11, line:formula( 11 ), 14, line:formula( 14 ) )
-canvas:add_render_object( line ) ]]
+canvas:add_render_object( line )
 
---  very basic canvas
+--[[ --  very basic canvas
 local canvas = grafy.canvas( x, y, w, h, scale, "curb your maths" )
 
 --  exponential curve
@@ -110,7 +110,7 @@ canvas:add_render_object( curb )
 local curb = grafy.curb( function( x )
     return math.cos( x ) + 5
 end )
-canvas:add_render_object( curb )
+canvas:add_render_object( curb ) ]]
 
 hook.Add( "HUDPaint", "grafy", function()
     canvas:draw()

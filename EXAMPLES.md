@@ -40,6 +40,9 @@ end )
 ```
 ### result
 ![graphical1](https://media.discordapp.net/attachments/608325399687987240/781112632379441182/unknown.png)
+```
+10	127.6	11	130.1	14	137.6
+```
 
 ## table and average line
 ### code
