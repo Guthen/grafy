@@ -43,11 +43,12 @@ end ) --  modules files
 --  example
 if not grafy._show_example or SERVER then hook.Remove( "HUDPaint", "grafy" ) return end
 
-local w, h, scale = ScrW() / 4, ScrH() / 2, .85
+local w, h, scale = ScrW() / 4, ScrH() / 2, 1.1
 local x, y = ScrW() / 2 - w / 2, ScrH() / 2 - h / 2
 local canvas = grafy.canvas( x, y, w, h, scale, "Évolution annuel d'immatriculations de voitures neuves (diesel)" )
 canvas:set_axes_titles( "an (x)", "milliers (y)" )
 canvas:set_steps( 1, 10 )
+canvas.color = Color( 242, 97, 184 )
 
 local tbl = grafy.table( { --  cc le dm d'enseignement scientifique
     100,
@@ -61,6 +62,9 @@ local tbl = grafy.table( { --  cc le dm d'enseignement scientifique
     126,
     122.7,
 }, GRAFY_Y, "série" )
+tbl.draw_method = GRAFY_CIRCLE
+tbl.color = canvas.color
+canvas:add_render_object( tbl )
 --[[ local canvas = grafy.canvas( x, y, w, h, scale, "sample text" )
 canvas:set_steps( 1, 3 )
 
@@ -85,10 +89,11 @@ canvas:add_render_object( line ) ]]
 --[[ local curb = grafy.curb( function( x ) return math.exp( x ) end, "exp x" )
 canvas:add_render_object( curb ) ]]
 
-local line = grafy.line( 2.5, 102.6, "droite d'ajustement" )
-line.color = tbl.color
-line:highlight( 14 )
-print( 10, line:formula( 10 ), 11, line:formula( 11 ), 14, line:formula( 14 ) )
+local line = grafy.line( 2.5, 102.6, "y=2.5x+102.6" )
+--line.color = tbl.color
+line.draw_method = GRAFY_CIRCLE
+--line:highlight( 14 )
+--print( 10, line:formula( 10 ), 11, line:formula( 11 ), 14, line:formula( 14 ) )
 canvas:add_render_object( line )
 
 --[[ --  very basic canvas

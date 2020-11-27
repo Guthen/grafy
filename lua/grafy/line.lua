@@ -1,4 +1,4 @@
----   line
+--  line
 local meta = {}
 meta.__index = meta
 meta.label = nil
@@ -10,8 +10,12 @@ meta.draw_method = GRAFY_LINE
 meta.draws = {
     [GRAFY_DOT] = function( self, canvas )
         for x = 0, canvas.w / canvas.grid_size * canvas.step.x do
-            local line_y = self:formula( x )
-            draw.RoundedBox( 0, canvas:get_absolute_x( x ) - canvas.dot_size / 2 + 1, canvas:get_absolute_y( line_y ) - canvas.dot_size / 2 + 1, canvas.dot_size, canvas.dot_size, self.color )
+            canvas:draw_dot( x, self:formula( x ), self.color )
+        end
+    end,
+    [GRAFY_CIRCLE] = function( self, canvas )
+        for x = 0, canvas.w / canvas.grid_size * canvas.step.x do
+            canvas:draw_circle( x, self:formula( x ), nil, self.color )
         end
     end,
     [GRAFY_LINE] = function( self, canvas )

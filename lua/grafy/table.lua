@@ -4,6 +4,18 @@ meta.__index = meta
 meta.values = {}
 meta.color = color_white
 meta.draw_method = GRAFY_DOT
+meta.draws = {
+    [GRAFY_DOT] = function( self, canvas )
+        for i, field in ipairs( self.values ) do
+            canvas:draw_dot( field.x, field.y, self.color )
+        end
+    end,
+    [GRAFY_CIRCLE] = function( self, canvas )
+        for i, field in ipairs( self.values ) do
+            canvas:draw_circle( field.x, field.y, nil, self.color )
+        end
+    end,
+}
 
 --[[
     create a drawable grafy's table:
@@ -94,9 +106,7 @@ end
 
 function meta:draw( canvas )
     --  draw values
-    for i, field in ipairs( self.values ) do
-        canvas:draw_dot( field.x, field.y, self.color )
-    end
+    self.draws[self.draw_method]( self, canvas )
 end
 
 return meta

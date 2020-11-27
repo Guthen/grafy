@@ -1,4 +1,4 @@
----  canvas
+--  canvas
 local meta = {}
 meta.__index = meta
 meta.x = 0
@@ -9,6 +9,7 @@ meta.grid_size = 0
 meta.dot_size = 0
 meta.step = { x = 1, y = 1 }
 meta.objects = {}
+meta.color = Color( 63, 136, 196 )
 meta.title = nil
 meta.title_x = "x"
 meta.title_y = "y"
@@ -22,7 +23,7 @@ function meta:construct( x, y, w, h, scale, title )
     canvas.scale = scale or 1
     --[[ canvas.grid_size = math.min( w / #canvas.values, h / canvas.max.y ) * canvas.scale ]]
     canvas.grid_size = w / 20 * canvas.scale
-    canvas.dot_size = canvas.grid_size / 3.5
+    canvas.dot_size = canvas.grid_size / 3
     canvas.title = title
     return setmetatable( canvas, self )
 end
@@ -53,8 +54,12 @@ function meta:draw_dot( x, y, color )
     draw.RoundedBox( 0, self:get_absolute_x( x ) - self.dot_size / 2 + 1, self:get_absolute_y( y ) - self.dot_size / 2 + 1, self.dot_size, self.dot_size, color )
 end
 
+function meta:draw_circle( x, y, radius, color )
+    local radius = radius or self.dot_size / 2
+    grafy.draw_circle( self:get_absolute_x( x ), self:get_absolute_y( y ), radius, color )
+end
+
 local axe_tick_tall = 3
-local point_color = Color( 63, 136, 196 )
 local grid_color = Color( 136, 136, 136 )
 local color_black = Color( 0, 0, 0 )
 local axe_color = ColorAlpha( color_black, 195 )
@@ -67,7 +72,7 @@ function meta:draw()
     local title_gap, title_height = math.max( w * .005, h * .02 ), 0
     if self.title then
         title_height = draw.GetFontHeight( grafy._fonts.bold )
-        draw.SimpleText( self.title, grafy._fonts.bold, x + w / 2, y + title_gap * 2, point_color, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP )
+        draw.SimpleText( self.title, grafy._fonts.bold, x + w / 2, y + title_gap * 2, self.color, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP )
     end
 
     --  center
@@ -140,6 +145,8 @@ function meta:draw()
                 surface.DrawLine( label_x - label_w - label_symbol_w, label_y + 1, label_x - label_w - label_symbol_gap, label_y + 1 )
             elseif object.draw_method == GRAFY_DOT then
                 draw.RoundedBox( 0, label_x - label_w - label_symbol_w / 2 - label_symbol_h / 2, label_y - label_symbol_h / 4, label_symbol_h, label_symbol_h, object.color )
+            elseif object.draw_method == GRAFY_CIRCLE then
+                grafy.draw_circle( label_x - label_w - label_symbol_w / 2, label_y + label_symbol_h / 2 - 1, canvas.dot_size / 2, object.color )
             end
 
             label_i = label_i + 1
